@@ -71,7 +71,7 @@
   }
   
   button:hover {
-    background-color: #45a049;
+    background-color: #e63b15;
   }
   
   .cancelbtn {
@@ -81,4 +81,11 @@
   .cancelbtn:hover {
     background-color: #e53935;
   }
-  
+  .messages{
+    list-style-type: none;
+    color: #e53935;
+    text-align: center;
+  }
+  .button-container{
+    margin-bottom: 15px;
+  }
