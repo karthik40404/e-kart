@@ -21,7 +21,7 @@
                 <a class="nav-link" href="logout">Logout</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
+                <a class="nav-link" href="add">addproduct</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">Link</a>
@@ -30,5 +30,21 @@
           </div>
         </div>
       </nav>
+      <div class="container">
+        <div class="row">
+          {% for p in products %}
+          <div class="col-lg-4">
+            <div class="card" style="width:100%;height:auto">
+              <img class="card-img-top" src="{{p.img.url}}" alt="Card image" style="width:100%">
+              <div class="card-body">
+                <h4 class="card-title">{{p.name}}</h4>
+                <p class="card-text">{{p.disc}}</p>
+                <p class="card-text">{{p.price}}</p>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
 </body>
 </html>
