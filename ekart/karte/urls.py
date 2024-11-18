@@ -6,5 +6,6 @@ urlpatterns = [
     path('shop_home',views.shop_home),
     path('register',views.reg),
     path('logout',views.log_out),
-    path('add',views.addproduct)
+    path('add',views.addproduct),
+    path('edit_product/<pid>',views.edit_product)
 ]

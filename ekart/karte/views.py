@@ -52,6 +52,33 @@ def addproduct(req):
         return redirect(log)
 
 
+def edit_product(req,pid):
+    if req.method=='POST':
+        p_id=req.POST['pid']
+        name=req.POST['name']
+        disc=req.POST['disc']
+        price=req.POST['price']
+        offer_price=req.POST['offer_price']
+        stock=req.POST['stock']
+        file=req.FILES.get('img')
+        if file:
+            Product.objects.filter(pk=pid).update(pid=p_id,name=name,disc=disc,price=price,offer_price=offer_price,stock=stock)
+            data=Product.objects.get(pk=pid)
+            data.img=file
+            data.save()
+        else: 
+            Product.objects.filter(pk=pid).update(pid=p_id,name=name,disc=disc,price=price,offer_price=offer_price,stock=stock)
+        return redirect (shop_home)
+    
+    else:
+        data=Product.objects.get(pk=pid)
+        return render(req,'shop/edit.html',{'data':data})
+
+
+
+
+
+
 
 def reg(req):
     return render(req,'reg.html')
