@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from .models import *
+import os
 
 # Create your views here.
 def log(req):
@@ -74,11 +75,16 @@ def edit_product(req,pid):
         data=Product.objects.get(pk=pid)
         return render(req,'shop/edit.html',{'data':data})
 
-
-
-
-
-
+def delete_product(req,pid):
+    data=Product.objects.get(pk=pid)
+    file=data.img.url
+    file=file.split('/')[-1]
+    os.remove('media/'+file)
+    data.delete()
+    return redirect(shop_home)
 
 def reg(req):
-    return render(req,'reg.html')
+    return render(req,'user/reg.html')
+
+def uhome(req):
+    return render(req,'user/uhome.html')

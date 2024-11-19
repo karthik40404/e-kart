@@ -7,5 +7,7 @@ urlpatterns = [
     path('register',views.reg),
     path('logout',views.log_out),
     path('add',views.addproduct),
-    path('edit_product/<pid>',views.edit_product)
+    path('edit_product/<pid>',views.edit_product),
+    path('delete_product/<pid>',views.delete_product),
+    path('uhome',views.uhome)
 ]
