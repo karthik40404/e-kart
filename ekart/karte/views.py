@@ -3,11 +3,14 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from .models import *
 import os
+from django.contrib.auth.models import User
 
 # Create your views here.
 def log(req):
     if 'shop' in req.session:
         return redirect (shop_home)
+    if 'user' in req.session:
+        return redirect (uhome)
     if req.method=='POST':
         uname=req.POST['uname']
         psw=req.POST['psw']
@@ -15,24 +18,29 @@ def log(req):
         print(data)
         if data:
             login(req,data)
-            req.session['shop']=uname
-            return redirect(shop_home)
+            if data.is_superuser:
+                req.session['shop']=uname
+                return redirect(shop_home)
+            else:
+                req.session['user']=uname
+                return redirect(uhome)
         else:
             messages.warning(req, "Incorrect uname or password.")
             return redirect(log)
     return render(req,'login.html')
 
+def log_out(req):
+    logout(req)
+    req.session.flush()
+    return redirect(log)
+
+#----------------------------admin
 def shop_home(req):
     if 'shop' in req.session:
         data=Product.objects.all()
         return render(req,'shop/home.html',{'products':data})
     else:
         return redirect(log)
-
-def log_out(req):
-    logout(req)
-    req.session.flush()
-    return redirect(log)
 
 def addproduct(req):
     if 'shop' in req.session:
@@ -51,7 +59,6 @@ def addproduct(req):
             return render(req,'shop/addp.html')
     else:
         return redirect(log)
-
 
 def edit_product(req,pid):
     if req.method=='POST':
@@ -83,8 +90,25 @@ def delete_product(req,pid):
     data.delete()
     return redirect(shop_home)
 
+#-----------------------user
 def reg(req):
-    return render(req,'user/reg.html')
+    if req.method=='POST':
+        name=req.POST['name']
+        email=req.POST['email']
+        psw=req.POST['psw']
+        try:
+            data=User.objects.create_user(first_name=name,email=email,username=email,password=psw)
+            data.save()
+        except:
+             messages.warning(req, "email already in use")
+             return redirect(reg)
+        return redirect(log)
+    else:
+        return render(req,'user/reg.html')
 
 def uhome(req):
-    return render(req,'user/uhome.html')
+    if 'user' in req.session:
+        data=Product.objects.all()
+        return render(req,'user/uhome.html',{'products':data})
+    else:
+        return redirect(log)

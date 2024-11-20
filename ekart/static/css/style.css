@@ -17,7 +17,7 @@
   .login-container {
     width: 100%;
     max-width: 400px;
-    background-color: white;
+    background-color: rgb(192, 170, 170);
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     padding: 20px;
@@ -87,5 +87,9 @@
     text-align: center;
   }
   .button-container{
+    margin-bottom: 15px;
+  }
+
+  .a-container{
     margin-bottom: 15px;
   }
