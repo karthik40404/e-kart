@@ -112,3 +112,19 @@ def uhome(req):
         return render(req,'user/uhome.html',{'products':data})
     else:
         return redirect(log)
+    
+def viewp(req,pid):
+    data=Product.objects.get(pk=pid)
+    return render(req,'user/vproduct.html',{'product':data})
+
+#-----------------------cart
+
+def addtocart(req,pid):
+    product=Product.objects.get(pk=pid)
+    user=User.objects.get(username=req.session['user'])
+    data=Cart.objects.create(product=product,user=user,qty=1)
+    data.save()
+    return redirect(viewc)
+
+def viewc(req):
+    return render(req,'user/cart.html')

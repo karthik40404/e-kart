@@ -45,14 +45,16 @@
       <div class="row">
         {% for p in products %}
         <div class="col-lg-3">
+          <a href="viewproduct/{{p.pk}}">
           <div class="card" style="width:100%;height:auto">
-            <img class="card-img-top" src="{{p.img.url}}" alt="Card image" style="width:100%">
+            <img class="card-img-top" src="{{p.img.url}}" style="width:100% ;height:400px;">
             <div class="card-body">
-              <h3><a href="">{{p.name}}</a></h3> 
+              <h3>{{p.name}}</h3> 
               <p class="card-text">{{p.disc}}</p>
               <p class="card-text">{{p.price}}</p>
             </div>
           </div>
+        </a>
         </div>
         {% endfor %}
       </div>
