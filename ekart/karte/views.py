@@ -122,9 +122,31 @@ def viewp(req,pid):
 def addtocart(req,pid):
     product=Product.objects.get(pk=pid)
     user=User.objects.get(username=req.session['user'])
-    data=Cart.objects.create(product=product,user=user,qty=1)
-    data.save()
+    try:
+        cart=Cart.objects.get(user=user,product=product)
+        cart.qty+=1
+        cart.save()
+    except:
+        data=Cart.objects.create(product=product,user=user,qty=1)
+        data.save()
     return redirect(viewc)
 
 def viewc(req):
-    return render(req,'user/cart.html')
+    user=User.objects.get(username=req.session['user'])
+    data=Cart.objects.filter(user=user)[::-1]
+    return render(req,'user/cart.html',{'cart':data})
+
+def qin(req,cid):
+    data=Cart.objects.get(pk=cid)
+    data.qty+=1
+    data.save()
+    return redirect(viewc)
+
+def qout(req,cid):
+    data=Cart.objects.get(pk=cid)
+    data.qty-=1
+    data.save()
+    print(data.qty)
+    if data.qty==0:
+        data.delete()
+    return redirect(viewc)
