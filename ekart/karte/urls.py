@@ -15,4 +15,7 @@ urlpatterns = [
     path('viewc',views.viewc),
     path('in/<cid>',views.qin),
     path('out/<cid>',views.qout),
+    path('cartbuy/<cid>',views.cart_buy),
+    path('book',views.bookings),
+    path('buy/<pid>',views.buybuy),
 ]
