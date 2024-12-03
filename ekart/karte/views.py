@@ -4,6 +4,8 @@ from django.contrib import messages
 from .models import *
 import os
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
+from django.conf import settings
 
 # Create your views here.
 def log(req):
@@ -96,6 +98,7 @@ def reg(req):
         name=req.POST['name']
         email=req.POST['email']
         psw=req.POST['psw']
+        send_mail('acc created', 'your eshop acc is created', settings.EMAIL_HOST_USER, [email])
         try:
             data=User.objects.create_user(first_name=name,email=email,username=email,password=psw)
             data.save()
