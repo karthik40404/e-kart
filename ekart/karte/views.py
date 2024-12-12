@@ -119,7 +119,7 @@ def uhome(req):
 def viewp(req,pid):
     data=Product.objects.get(pk=pid)
     return render(req,'user/vproduct.html',{'product':data})
-
+ 
 #-----------------------cart
 
 def addtocart(req,pid):
